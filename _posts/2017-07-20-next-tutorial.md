@@ -1,177 +1,70 @@
 ---
-title: Next Theme Tutorial
-description: NexT is a high quality elegant Jekyll theme ported from Hexo Next. It is crafted from scratch, with love.
+title: ch22
+description: 한양대학교 에리카 ICT융합학부 오픈소스SW기초수업 자료
 categories:
  - tutorial
 tags:
 ---
 
-> NexT is a high quality elegant [Jekyll](https://jekyllrb.com) theme ported from [Hexo Next](https://github.com/iissnan/hexo-theme-next). It is crafted from scratch, with love.
 
 <!-- more -->
 
-[Live Preview](http://simpleyyt.github.io/jekyll-theme-next/)
-
 ## Screenshots
 
-* Desktop
-![Desktop Preview](http://iissnan.com/nexus/next/desktop-preview.png)
+* Image
+![Desktop Preview](https://postfiles.pstatic.net/MjAxNzEyMjZfMTEy/MDAxNTE0Mjc2MTQ1NzMw.CBG1xE5_Ys3KtrNkifCpqbeB12Q1sGirIyaS6Hc4ICQg._1grJChz36oBk47Y05R2YoaQ_dAQzCfV04ZjALzDuTIg.JPEG.vv121102/ch22.jpg?type=w773)
+![Desktop Preview](https://postfiles.pstatic.net/MjAxNzEyMjZfOTMg/MDAxNTE0Mjc2MjM0OTc3.0yJZZVTZwZFlmGawFC0rgpxS8rKdrIFwMRzBrljIihMg.iZNsunp1PsNm68nUn0kS_NISB2FqASNZszGvweNfWKkg.PNG.vv121102/KakaoTalk_Photo_2017-12-26-17-16-58.png?type=w773)
+![Desktop Preview](https://postfiles.pstatic.net/MjAxNzEyMjZfNzUg/MDAxNTE0Mjc2MjM0OTQ0.Yy8qIJ79Le7tcXsfq1ZWcocPL-6J2EVAjIbdLI_6kVMg.YLSeC8PwiDoTfywMc1sC98BTvmNDnZXlsLU4hQ0DDCAg.PNG.vv121102/KakaoTalk_Photo_2017-12-26-17-16-53.png?type=w773)
+![Desktop Preview](https://postfiles.pstatic.net/MjAxNzEyMjZfODYg/MDAxNTE0Mjc2MjM3NDE4.fFxEmWIsDyxvfHFnJA0qXuekdS8yADwqx1zb-_TTFxog.DwsB28nKt7e_ZFqoLar0Tfni50mMgFWEe1v7nPO2DScg.JPEG.vv121102/KakaoTalk_Photo_2017-12-26-17-16-33.jpeg?type=w773)
 
-* Sidebar
-
-![Desktop Sidebar Preview](http://iissnan.com/nexus/next/desktop-sidebar-preview.png)
-
-* Sidebar (Post details page)
-
-![Desktop Sidebar Preview](http://iissnan.com/nexus/next/desktop-sidebar-toc.png)
-
-* Mobile
-
-![Mobile Preview](http://iissnan.com/nexus/next/mobile.png)
+* Code
 
 
-## Installation
+	import RPi.GPIO as GPIO
+	import time
+	import vlc
+	import LCD
 
-Check whether you have `Ruby 2.1.0` or higher installed:
+	GPIO.setmode(GPIO.BCM)
+	Button
+	GPIO.setup(23, GPIO.IN) # Pause button
+	GPIO.setup(24, GPIO.IN) # Stop button
+	LED// one for pause
+	GPIO.setup(27, GPIO.OUT)
+	Turn off LED
+	GPIO.output(27, False)
 
-```sh
-ruby --version
-```
+	file ="파일주소"
+    
+    
+	instance = vlc.instance()
+    
+    
+	player=instance.media_player_new()
+	
+    
+	media = instance.media_new(file)
+	
+    
+	player.set_media(media)
 
-Install `Bundler`:
+	player.play()
+	time.sleep(1)
+    
+	while True():
+  	  state = player.get_state()
+   	  if GPIO.input(23)==0:
+		player.pause()
+		if state == 3:
+   	         GPIO.output(27, False)
+   	    elif state == 4:
+   	         GPIO.output(27, True)
+		time.sleep(1)
+  	   	elif GPIO.input(24)==0 and state == 3:
+   	    	break
+            
+* Video
 
-```sh
-gem install bundler
-```
-
-Clone Jacman theme:
-
-```sh
-git clone https://github.com/Simpleyyt/jekyll-theme-next.git
-cd jekyll-theme-next
-```
-
-Install Jekyll and other dependencies from the GitHub Pages gem:
-
-```sh
-bundle install
-```
-
-Run your Jekyll site locally:
-
-```sh
-bundle exec jekyll server
-```
-
-More Details：[Setting up your GitHub Pages site locally with Jekyll](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/)
-
-
-## Features
-
-### Multiple languages support, including: English / Russian / French / German / Simplified Chinese / Traditional Chinese.
-
-Default language is English.
-
-```yml
-language: en
-# language: zh-Hans
-# language: fr-FR
-# language: zh-hk
-# language: zh-tw
-# language: ru
-# language: de
-```
-
-Set `language` field as following in site `_config.yml` to change to Chinese.
-
-```yml
-language: zh-Hans
-```
-
-### Comment support.
-
-NexT has native support for `DuoShuo` and `Disqus` comment systems.
-
-Add the following snippets to your `_config.yml`:
-
-```yml
-duoshuo:
-  enable: true
-  shortname: your-duoshuo-shortname
-```
-
-OR
-
-```yml
-disqus_shortname: your-disqus-shortname
-```
-
-### Social Media
-
-NexT can automatically add links to your Social Media accounts:
-
-```yml
-social:
-  GitHub: your-github-url
-  Twitter: your-twitter-url
-  Weibo: your-weibo-url
-  DouBan: your-douban-url
-  ZhiHu: your-zhihu-url
-```
-
-### Feed link.
-
-> Show a feed link.
-
-Set `rss` field in theme's `_config.yml`, as the following value:
-
-1. `rss: false` will totally disable feed link.
-2. `rss:  ` use sites' feed link. This is the default option.
-
-    Follow the installation instruction in the plugin's README. After the configuration is done for this plugin, the feed link is ready too.
-
-3. `rss: http://your-feed-url` set specific feed link.
-
-### Up to 5 code highlight themes built-in.
-
-NexT uses [Tomorrow Theme](https://github.com/chriskempson/tomorrow-theme) with 5 themes for you to choose from.
-Next use `normal` by default. Have a preview about `normal` and `night`:
-
-![Tomorrow Normal Preview](http://iissnan.com/nexus/next/tomorrow-normal.png)
-![Tomorrow Night Preview](http://iissnan.com/nexus/next/tomorrow-night.png)
-
-Head over to [Tomorrow Theme](https://github.com/chriskempson/tomorrow-theme) for more details.
-
-## Configuration
-
-NexT comes with few configurations.
-
-```yml
-
-# Menu configuration.
-menu:
-  home: /
-  archives: /archives
-
-# Favicon
-favicon: /favicon.ico
-
-# Avatar (put the image into next/source/images/)
-# can be any image format supported by web browsers (JPEG,PNG,GIF,SVG,..)
-avatar: /default_avatar.png
-
-# Code highlight theme
-# available: normal | night | night eighties | night blue | night bright
-highlight_theme: normal
-
-# Fancybox for image gallery
-fancybox: true
-
-# Specify the date when the site was setup
-since: 2013
-
-```
-
-## Browser support
-
-![Browser support](http://iissnan.com/nexus/next/browser-support.png)
+![Desktop Sidebar Preview]
+<iframe width="854" height="480" src="https://www.youtube.com/embed/FhJa0tm1bTM" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+<iframe width="854" height="480" src="https://www.youtube.com/embed/T3NYgEYmuMk" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
